@@ -1,5 +1,5 @@
-import pygame as pg
-vec = pg.math.Vector2
+import pygame as py
+vec = py.math.Vector2
 
 # define some colors (R, G, B)
 WHITE = (255, 255, 255)
@@ -38,6 +38,7 @@ BARREL_OFFSET = vec(30, 10)
 
 # Layers
 WALL_LAYER = 1
+WILD_AREA_LAYER = 5 
 PLAYER_LAYER = 2
 BULLET_LAYER = 3
 MOB_LAYER = 2

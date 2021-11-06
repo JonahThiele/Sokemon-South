@@ -106,7 +106,19 @@ class Wall(py.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
-
+class Wild_Area(py.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self._layer = WILD_AREA_LAYER
+        self.groups = game.all_sprites, game.walls
+        py.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        #set to the size of tile
+        self.image = py.Surface([50, 50])
+        self.rect = self.image.get_rect()
+        self.x = x
+        self.y = y
+        self.rect.x = x * TILESIZE
+        self.rect.y = y * TILESIZE
 class NPC(py.sprite.Sprite):
     pass
 
