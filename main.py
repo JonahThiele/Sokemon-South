@@ -4,7 +4,7 @@ from os import path
 from settings import *
 from sprites import *
 from tilemap import *
-from buttonClass import Title
+from combat import *
 import random as rand
 
 
@@ -51,6 +51,11 @@ class Game:
         self.screen = py.display.set_mode((WIDTH, HEIGHT))
         py.display.set_caption(TITLE)
         self.clock = py.time.Clock()
+        self.combat = False
+        self.start = True
+        self.world = True
+        self.capture = False
+        self.end = False
         py.key.set_repeat(500, 100)
         self.load_data()
 
@@ -97,16 +102,18 @@ class Game:
         self.map = TiledMap(path.join(self.map_folder, 'jungle.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
+        self.combatBackground = py.image.load(path.join(img_folder,'combatBackground.png'))
+    
         self.player_img = py.image.load(path.join(img_folder, PLAYER_IMG)).convert_alpha()
         self.wall_img = py.image.load(path.join(img_folder, WALL_IMG)).convert_alpha()
         self.wall_img = py.transform.scale(self.wall_img, (TILESIZE, TILESIZE))
-
     def new(self):
         # initialize all variables and do all the setup for a new game
         self.all_sprites = py.sprite.LayeredUpdates()
         self.walls = py.sprite.Group()
         self.mobs = py.sprite.Group()
         self.wild_areas = py.sprite.Group()
+        self.npcs = py.sprite.Group()
         self.items = py.sprite.Group()
         self.map = TiledMap(path.join(self.map_folder, 'jungle.tmx'))
         self.map_img = self.map.make_map()
@@ -125,12 +132,14 @@ class Game:
                 self.player  = Player(self, obj_center.x, obj_center.y)
             if tile_object.name == 'wall':
                 Obstacle(self, tile_object.x, tile_object.y, tile_object.width, tile_object.height)
-            if tile_object.name == 'wild_area':
-                Wild_Area(self, obj_center, tile_object.name)
+            if tile_object.name == 'wildArea':
+                Wild_Area(self, tile_object.
+                x, tile_object.y, tile_object.width, tile_object.height)
+            if tile_object.name == 'npc':
+                NPC(self, obj_center.x, obj_center.y)
         self.camera = Camera(self.map.width, self.map.height)
         self.draw_debug = False
         self.paused = False
-        # self.effects_sounds['level_start'].play()
         self.camera = Camera(self.map.width, self.map.height)
         self.draw_debug = False
         self.paused = False
@@ -145,6 +154,7 @@ class Game:
             if not self.paused:
                 self.update()
             self.draw()
+    
 
     def quit(self):
         py.quit()
@@ -168,7 +178,7 @@ class Game:
         #         hit.kill()
         #         self.effects_sounds['gun_pickup'].play()
         #         self.player.weapon = 'shotgun'
-        # mobs hit player
+        # mobs hit player  
         # bullets hit mobs
 
     def draw_grid(self):
@@ -210,6 +220,11 @@ class Game:
                 if event.key == py.K_p:
                     self.paused = not self.paused
 
+    def combat_screen(self):
+        combat = Combat(self)
+        combat.run()
+    def capture_screen(self):
+        pass
     def show_start_screen(self):
         py.display.set_caption(TITLE)
         self.screen.fill(WHITE)
@@ -259,18 +274,21 @@ class Game:
                         py.quit()
                         sys.exit()
 
-
-
 # create the game object
 g = Game()
 
 
 
 while True:
-    g.show_start_screen()
-    while helpScreen == True:
-        g.show_help_screen()
-    while playing == True:
+    if g.start:
         g.new()
+        g.start = False
+    if g.world:
         g.run()
+        g.world = False
+    if g.combat:
+        g.combat_screen()
+        g.combat = False
+    if g.end:
         g.show_go_screen()
+        g.end = False

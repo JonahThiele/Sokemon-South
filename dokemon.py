@@ -1,5 +1,6 @@
 import pygame as py
 import json
+import random as rd
 
 with open("dokemon.json") as dokemon_file:
     data = json.load(dokemon_file)
@@ -17,6 +18,27 @@ class Dokemon:
         self.defense = defense
         self.speed = speed
         self.attack = attack
+    
+    def moveSet(self):
+        for dokemon in data['possibleDokemon']:
+            if self.name == dokemon['name']:
+                for possibleMove in dokemon['moves']:
+                    move = possibleMove['moveName']
+                    self.attks.append(move)
+
+       
+    def decideRandAttack(self, target):
+        choice = rd.choice(self.attks)
+        target.takeDamage(choice[1])
+    def decideAttacks(self, choice, target):
+        alive = target.takeDamage(self.attks[choice][1])
+        return alive
+    def takeDamage(self, damage):
+        self.health -= damage
+        if self.health <= 0:
+            return False
+        else:
+            return True
         
     
 
@@ -33,6 +55,3 @@ for dokemon in data['possibleDokemon']:
         attack = stats['attack']
         new = Dokemon(name, health, sp_defense, sp_attack, defense, speed, attack)
     dokemonList.append(new)
-    
-for dokemon in dokemonList:
-    print(dokemon.name)
