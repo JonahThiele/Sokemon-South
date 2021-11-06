@@ -171,7 +171,7 @@ class Game:
         #         hit.kill()
         #         self.effects_sounds['gun_pickup'].play()
         #         self.player.weapon = 'shotgun'
-        # mobs hit player
+        # mobs hit player  
         # bullets hit mobs
 
     def draw_grid(self):
@@ -212,6 +212,7 @@ class Game:
                     self.draw_debug = not self.draw_debug
                 if event.key == py.K_p:
                     self.paused = not self.paused
+
     def combat_screen(self):
         combat = Combat(self)
         combat.run()
@@ -238,8 +239,6 @@ class Game:
                     self.quit()
                 if event.type == py.KEYUP:
                     waiting = False
-
-
 
 # create the game object
 g = Game()

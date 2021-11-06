@@ -61,6 +61,7 @@ class Player(py.sprite.Sprite):
         self.pos = vec(x, y)
         self.rot = 0
         self.health = PLAYER_HEALTH
+        self.bag = []
 
 
     def get_keys(self):
