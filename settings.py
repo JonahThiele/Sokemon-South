@@ -9,7 +9,9 @@ LIGHTGREY = (100, 100, 100)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
+BLUE = (0, 0, 255)
 BROWN = (106, 55, 5)
+
 
 # game settings
 WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
@@ -29,7 +31,7 @@ PLAYER_HEALTH = 100
 PLAYER_SPEED = 300
 PLAYER_ROT_SPEED = 250
 PLAYER_IMG = 'basic_snail.png'
-PLAYER_HIT_RECT = pg.Rect(0, 0, 35, 35)
+PLAYER_HIT_RECT = py.Rect(0, 0, 35, 35)
 BARREL_OFFSET = vec(30, 10)
 
 # Mob settings
