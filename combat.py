@@ -1,12 +1,30 @@
 from settings import *
 import pygame as py
+from dokemon import *
+
+class Menu:
+    def __init__(self, playerDokemon):
+        self.options = ["Attk 1"]
+        self.dokemon = playerDokemon
+        self.selected = 0
+        self.attack1 = self.dokemon.attk1
+        self.attack2 = self.dokemon.attk2
+        self.attack3 = self.dokemon.attk3
+        self.attack4 = self.dokemon.attk4
+        self.options = [self.attack1[0], self.attack2[0], self.attack3[0], self.attack4[0], "bag", "item", "run"]
+    
 
 class Combat:
     def __init__(self, game):
         #class declare for wild dokemon
         self.wild_dokemon = None
         self.capture_background = game.combatBackground
+        #dumby vals
+        self.sprites = py.sprite.Group()
+        animal = Dokemon()
+        self.menu = Menu(animal)
         self.paused = False
+        self.game = game
 
     def draw_text(self, text, font_name, size, color, x, y, surface):
         font = py.font.Font(font_name, size)
@@ -33,22 +51,64 @@ class Combat:
         py.draw.rect(surf, col, fill_rect)
         py.draw.rect(surf, BLACK, outline_rect, 2)
 
+    def attack(self, attacker, defender, damage):
+        pass
     def initialize(self):
         self.sprites = py.sprite.Group()
         self.draw_text("Combat initialized", self.game.title_font, 20, BLACK, WIDTH / 2, HEIGHT - 10, self.game.screen)
 
+    
+    def events(self):
+        for event in py.event.get():
+            if event.type == py.QUIT:
+                self.game.quit()
+            if event.type == py.KEYDOWN:
+                if event.key == py. K_DOWN or  event.key == py. K_s:
+                    self.menu.selected += 1
+                if event.key == py. K_UP or  event.key == py. K_w:
+                    self.menu.selected -= 1
+                if event.key == py. K_LEFT or  event.key == py. K_a:
+                    self.menu.selected -= 3
+                if event.key == py. K_RIGHT or  event.key == py. K_d:
+                    self.menu.selected += 3
+                    
+                if event.key == py.K_p:
+                    self.paused = not self.paused
+                
+                if self.menu.selected > 6:
+                    self.menu.selected = 6
+                if self.menu.selected < 0:
+                    self.menu.selected = 0
+
     def run(self):
         # game loop - set self.playing = False to end the game
+        firstLoop = True
         self.playing = True
         while self.playing:
-            self.dt = self.clock.tick(FPS) / 1000
+            if(firstLoop):
+                self.update
             self.events()
+            self.dt = self.game.clock.tick(FPS) / 1000
             if not self.paused:
                 self.update()
             self.draw()
-    
+
+    def draw(self):
+        y = 610
+        x = 520
+        for i in self.menu.options:
+            if(i == "bag"):
+                x += 150
+                y = 610
+            if self.menu.options[self.menu.selected] == i:
+                self.draw_text( i , self.game.title_font, TEXTSIZE, YELLOW, x, y, self.game.screen)
+            else:
+                self.draw_text( i , self.game.title_font, TEXTSIZE, BLACK, x, y, self.game.screen)
+            y += 35
+        py.display.flip()
+
     def update(self):
+        py.display.set_caption("{:.2f}".format(self.game.clock.get_fps()))
+        self.game.screen.blit(self.capture_background, (0, 0))
         self.sprites.update()
-        py.display.set_caption("{:.2f}".format(self.clock.get_fps()))
-        self.screen.blit(self.capture_background, (0, 0))
-            
+     

@@ -29,7 +29,7 @@ PLAYER_HEALTH = 100
 PLAYER_SPEED = 300
 PLAYER_ROT_SPEED = 250
 PLAYER_IMG = 'basic_snail.png'
-PLAYER_HIT_RECT = pg.Rect(0, 0, 35, 35)
+PLAYER_HIT_RECT = py.Rect(0, 0, 35, 35)
 BARREL_OFFSET = vec(30, 10)
 
 # Mob settings
@@ -38,6 +38,7 @@ BARREL_OFFSET = vec(30, 10)
 
 # Layers
 WALL_LAYER = 1
+NPC_LAYER = 6
 WILD_AREA_LAYER = 5 
 PLAYER_LAYER = 2
 BULLET_LAYER = 3
@@ -45,3 +46,5 @@ MOB_LAYER = 2
 EFFECTS_LAYER = 4
 ITEMS_LAYER = 1
 
+# encounter ssettings
+TEXTSIZE = 35

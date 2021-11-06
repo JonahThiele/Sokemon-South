@@ -5,6 +5,7 @@ from tilemap import collide_hit_rect
 import pytweening as tween
 from itertools import chain
 from math import atan2, pi
+import random as rd
 vec = py.math.Vector2
 
 
@@ -28,6 +29,21 @@ def collide_with_walls(sprite, group, dir):
                 sprite.pos.y = hits[0].rect.bottom + sprite.hit_rect.height / 2
             sprite.vel.y = 0
             sprite.hit_rect.centery = sprite.pos.y
+
+def collide_with_dokemon(sprite, group, game):
+    hits = py.sprite.spritecollide(sprite, group, False, collide_hit_rect)
+    if hits:
+        chance = rd.randint(0, 20)
+        if chance == 20:
+            game.combat = True
+            game.playing = False
+
+
+def collide_with_npc(sprite, group, game):
+    hits = py.sprite.spritecollide(sprite, group, False, collide_hit_rect)
+    if hits:
+        game.combat = True
+
 
 
 class Player(py.sprite.Sprite):
@@ -93,6 +109,8 @@ class Player(py.sprite.Sprite):
         self.hit_rect.centery = self.pos.y
         collide_with_walls(self, self.game.walls, 'y')
         self.rect.center = self.hit_rect.center
+        collide_with_dokemon(self, self.game.wild_areas, self.game)
+ 
 
 class Wall(py.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -106,10 +124,24 @@ class Wall(py.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
+
 class Wild_Area(py.sprite.Sprite):
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, width, height):
         self._layer = WILD_AREA_LAYER
-        self.groups = game.all_sprites, game.walls
+        self.groups = game.wild_areas
+        py.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        #set to the size of tile
+        self.rect =  py.Rect(x, y, width, height)
+        self.x = x
+        self.y = y
+        self.rect.x = x 
+        self.rect.y = y 
+
+class NPC(py.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self._layer = NPC_LAYER
+        self.groups = game.all_sprites, game.npcs
         py.sprite.Sprite.__init__(self, self.groups)
         self.game = game
         #set to the size of tile
@@ -119,8 +151,6 @@ class Wild_Area(py.sprite.Sprite):
         self.y = y
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
-class NPC(py.sprite.Sprite):
-    pass
 
 class Obstacle(py.sprite.Sprite):
     def __init__(self, game, x, y, w, h):
