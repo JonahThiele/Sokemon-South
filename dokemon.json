@@ -123,6 +123,45 @@
                 "moveName": "splash"
             }
         ]
+    },
+    {
+        "name": "Glizzy",
+        "stats":[
+            {
+                "health": "255",
+                "attack": "10",
+                "defense": "10",
+                "sp. attack": "75",
+                "sp. defense": "135",
+                "speed": "55"
+            }
+        ],
+        "moves": [
+            {
+                "id": "1",
+                "moveName": "Pound", 
+                "details": [
+                    {
+                        "PP": "35",
+                        "Power": "40",
+                        "Accuracy": "100"
+                    }
+                ]
+            },
+            {
+                "id": "2",
+                "moveName": "Growl"
+            },
+            {
+                "id": "3",
+                "moveName": "Tail Whip"
+            },
+            {
+                "id": "4",
+                "moveName": "Refresh"
+            }
+ 
+        ]
     }
     ]
 }

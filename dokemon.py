@@ -9,13 +9,14 @@ with open("dokemon.json") as dokemon_file:
 
 
 class Dokemon:
-    def __init__(self, name, health, sp_defense, sp_attack, defense, speed):
+    def __init__(self, name, health, sp_defense, sp_attack, defense, speed, attack):
         self.name = name
         self.health = health
         self.sp_defense = sp_defense
         self.sp_attack = sp_attack
         self.defense = defense
         self.speed = speed
+        self.attack = attack
         
     
 
@@ -29,9 +30,9 @@ for dokemon in data['possibleDokemon']:
         speed = stats['speed']
         sp_attack = stats['sp. attack']
         sp_defense = stats['sp. defense']
-        
-        new = Dokemon(name, health, sp_defense, sp_attack, defense, speed)
+        attack = stats['attack']
+        new = Dokemon(name, health, sp_defense, sp_attack, defense, speed, attack)
     dokemonList.append(new)
     
 for dokemon in dokemonList:
-    print(dokemon.sp_attack)
+    print(dokemon.name)
