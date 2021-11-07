@@ -56,7 +56,6 @@ class Combat:
         self.last_turn = 0
         self.turn_delay = 500
         for dokemon in data['possibleDokemon']:
-            #dumby vals
             movesList = []
             powerList = []
             name = str(dokemon['name'])
@@ -72,7 +71,7 @@ class Combat:
             for moves in dokemon['moves']:
                 # add damage mod here
                 moveName = str(moves['moveName'])
-                number = moves['id']
+                number = int(moves['id'])
                 movesList.append((moveName, number))
                 power = int(moves['details'][0]['power'])
                 powerList.append(power)
@@ -189,7 +188,7 @@ class Combat:
                 self.playerFirst = True
             else:
                 self.playerFirst = False
-
+    
     def turn(self):
     
         if self.playerFirst:
@@ -214,6 +213,7 @@ class Combat:
         self.playing = True
         while self.playing:
             if(firstLoop):
+                self.decideturn()
                 self.update()
                 self.decideturn()
                 self.draw()
@@ -221,9 +221,12 @@ class Combat:
             
             self.dt = self.game.clock.tick(FPS) / 1000
             self.turn()
-            if not self.paused:
-                self.update()
-            self.draw()
+            current_time = py.time.get_ticks()
+            if current_time - self.last_turn > self.turn_delay:
+                self.last_turn = current_time
+                if not self.paused:
+                    self.update()
+                self.draw()
 
     def draw(self):
         y = 450
