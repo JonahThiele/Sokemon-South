@@ -145,10 +145,10 @@ class Combat:
                         self.menu.selected += 3
                     if event.key == py. K_SPACE or event.key == py. K_RETURN:
                         if self.menu.selected <= 3:
-                            stillAlive = self.player.decideAttacks(self.menu.selected, self.opponent)
-                            self.messagerLogger.logMessage(self.player.name + " used " + self.player.moves[self.menu.selected][1])
+                            stillAlive = self.player.decideAttacks(self.opponent, self.menu.selected, self.player)
+                            self.messagerLogger.logMessage(self.player.name + " used " + self.player.moves[self.menu.selected][0])
                             waiting = False
-                            if not stillAlive:
+                            if stillAlive == False:
                                 self.messagerLogger.logMessage(self.opponent.name + " has died")
                                 self.game.player.completed_comp = True
                                 self.game.world = True
@@ -191,32 +191,20 @@ class Combat:
                 self.playerFirst = False
 
     def turn(self):
-        if self.turnNum % 2 == 1:
-            if self.playerFirst:
-                self.events()
-            else:
-                stillAlive = self.opponent.decideRandAttack(self.player)
-
-                self.messagerLogger.logMessage(self.player.name + " used " + self.opponent.moves[self.menu.selected][0])
-                self.messagerLogger.logMessage(self.opponent.name + " health decrease")
-                if not stillAlive:
-                    self.messagerLogger.logMessage(self.opponent.name + " is dead")
-                    self.game.player.completed_comp = True
-                    self.game.world = True
-                    self.player.health = self.player.maxHealth
+    
+        if self.playerFirst:
+            self.events()
         else:
-            if self.playerFirst:
-                stillAlive = self.opponent.decideRandAttack(self.player)
-                self.messagerLogger.logMessage(self.player.name + " used " + self.player.moves[self.menu.selected][0])
-                self.messagerLogger.logMessage(self.opponent.name + " health decrease")
-                if not stillAlive:
-                    self.messagerLogger.logMessage(self.opponent.name + " is dead")
-                    self.game.player.completed_comp = True
-                    self.game.world = True
-                    waiting = False
-                    
-            else:
-                self.events()
+            stillAlive = self.opponent.decideRandAttack(self.player, self.opponent)
+            self.messagerLogger.logMessage(self.opponent.name + " used " + self.opponent.moves[self.menu.selected][0])
+            self.messagerLogger.logMessage(self.player.name + "'s health decrease")
+            if stillAlive == False:
+                self.messagerLogger.logMessage(self.player.name + " is dead")
+                self.game.player.completed_comp = True
+                self.game.world = True
+                self.player.health = self.player.maxHealth
+            self.events()
+    
         self.turnNum += 1
 
     def run(self):

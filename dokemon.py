@@ -30,18 +30,18 @@ class Dokemon(py.sprite.Sprite):
     def draw(self, surface, x, y):
         surface.blit(self.image, (x, y))
 
-    def decideRandAttack(self, target):
+    def decideRandAttack(self, recipient, attacking):
         choice = rd.randint(0, 3)
-        target.takeDamage(self, choice)
-    def decideAttacks(self, choice, target):
-        alive = target.takeDamage(self, choice)
-        return alive
-    def takeDamage(self, attacker, index):
-        totalDamage = (2/5 + 2 * attacker.power[index] * attacker.attack / self.defense) / 50 + 2
-        self.health -= totalDamage
+        recipient.takeDamage(recipient, attacking, choice)
+    def decideAttacks(self, recipient, choice, attacking):
+        recipient.takeDamage(recipient, attacking, choice)
+        
+    def takeDamage(self, defender, attacker, index):
+        totalDamage = (2/5 + 2 * attacker.power[index] * attacker.attack / defender.defense) / 50 + 2
+        defender.health -= totalDamage
 
 
-        if self.health <= 0:
+        if defender.health <= 0:
             return False
         else:
             return True
