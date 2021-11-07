@@ -146,9 +146,6 @@ class Game:
         if self.draw_debug:
             for wall in self.walls:
                 py.draw.rect(self.screen, RED, self.camera.apply_rect(wall.rect), 1)
-         #HUD functions
-        #self.draw_text('ammo', self.hud_font, 30, WHITE,  110, 30,)
-        #self.draw_text('health', self.hud_font, 30, WHITE, 110, 0, )
         if self.paused:
             self.screen.blit(self.dim_screen, (0, 0))
             self.draw_text("Paused", self.title_font, 105, RED, WIDTH / 2, HEIGHT / 2, align='center')
