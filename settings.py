@@ -31,7 +31,7 @@ WALL_IMG = 'tileGreen_39.png'
 PLAYER_HEALTH = 100
 PLAYER_SPEED = 300
 PLAYER_ROT_SPEED = 250
-PLAYER_IMG = 'basic_snail.png'
+PLAYER_IMG = 'Gerold.png'
 PLAYER_HIT_RECT = py.Rect(0, 0, 35, 35)
 BARREL_OFFSET = vec(30, 10)
 
