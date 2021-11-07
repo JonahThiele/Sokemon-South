@@ -5,12 +5,8 @@ import random as rd
 with open("dokemon.json") as dokemon_file:
     data = json.load(dokemon_file)
 
-
-
-
-
 class Dokemon:
-    def __init__(self, name, health, sp_defense, sp_attack, defense, speed, attack):
+    def __init__(self, name, health, sp_defense, sp_attack, defense, speed, attack, attks):
         self.name = name
         self.health = health
         self.sp_defense = sp_defense
@@ -18,6 +14,8 @@ class Dokemon:
         self.defense = defense
         self.speed = speed
         self.attack = attack
+        self.maxHealth = health
+        self.moves = attks
     
     def moveSet(self):
         for dokemon in data['possibleDokemon']:
@@ -44,14 +42,14 @@ class Dokemon:
 
 dokemonList = []
 
-for dokemon in data['possibleDokemon']:
-    name = str(dokemon['name'])
-    for stats in dokemon['stats']:
-        health = stats['health']
-        defense = stats['defense']
-        speed = stats['speed']
-        sp_attack = stats['sp. attack']
-        sp_defense = stats['sp. defense']
-        attack = stats['attack']
-        new = Dokemon(name, health, sp_defense, sp_attack, defense, speed, attack)
-    dokemonList.append(new)
+# for dokemon in data['possibleDokemon']:
+#     name = str(dokemon['name'])
+#     for stats in dokemon['stats']:
+#         health = stats['health']
+#         defense = stats['defense']
+#         speed = stats['speed']
+#         sp_attack = stats['sp. attack']
+#         sp_defense = stats['sp. defense']
+#         attack = stats['attack']
+#         new = Dokemon(name, health, sp_defense, sp_attack, defense, speed, attack, health)
+#     dokemonList.append(new)

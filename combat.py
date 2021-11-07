@@ -2,15 +2,18 @@ from pygame import draw
 from settings import *
 import pygame as py
 from dokemon import *
+import random as rd
 import time
 
 class Menu:
     def __init__(self, playerDokemon):
-        self.options = ["Attk 1"]
+        self.options = []
         self.dokemon = playerDokemon
         self.selected = 0
-        self.attks = self.dokemon.attks
-        self.options = [self.attks[0], self.attks[1], self.attks[2], self.attks[3], ["bag", 0], ["item", 0], ["run", ]]
+        self.moves = self.dokemon.moves
+        for i in self.moves:
+            self.options.append(i)
+        self.options.extend([["bag", 0], ["run", 0]])
 
 class MessagerLogger:
     def __init__(self):
@@ -29,10 +32,27 @@ class Combat:
         #class declare for wild dokemon
         self.wild_dokemon = None
         self.capture_background = game.combatBackground
-        #dumby vals
         self.sprites = py.sprite.Group()
-        animal = Dokemon()
-        self.menu = Menu(animal)
+        for dokemon in data['possibleDokemon']:
+            #dumby vals
+            movesList = []
+            name = str(dokemon['name'])
+            
+            for stats in dokemon['stats']:
+                health = stats['health']
+                defense = stats['defense']
+                speed = stats['speed']
+                sp_attack = stats['sp. attack']
+                sp_defense = stats['sp. defense']
+                attack = stats['attack']
+            for moves in dokemon['moves']:
+                # add damage mod here
+                moveName = str(moves['moveName'])
+                number = moves['id']
+                movesList.append((moveName, number))
+            animal = Dokemon(name, health, sp_defense, sp_attack, defense, speed, attack, movesList)
+            dokemonList.append(animal)
+        self.menu = Menu(dokemonList[1])
         self.paused = False
         self.game = game
         self.turnNum = 0
@@ -63,10 +83,11 @@ class Combat:
         py.draw.rect(self.game.screen, BLACK, outline_rect, 2)
 
     def initialize(self):
-        self.player = Dokemon()
-        self.player.name = "A"
-        self.Oponent = Dokemon()
-        self.Oponent.name = "B"
+        # what 
+        self.player = dokemonList[0]
+        self.player.name = "Gerald"
+        self.Oponent = dokemonList[1]
+        self.Oponent.name = "Drake"
         self.messagerLogger = MessagerLogger()
         self.sprites = py.sprite.Group()
 
@@ -163,17 +184,17 @@ class Combat:
         x = 520
         for i in self.menu.options:
             if(i[0] == "bag"):
-                x += 150
+                x += 350
                 y = 610
             if self.menu.options[self.menu.selected] == i:
                 self.draw_text( i[0] , self.game.title_font, TEXTSIZE, YELLOW, x, y, self.game.screen)
             else:
                 self.draw_text( i[0], self.game.title_font, TEXTSIZE, BLACK, x, y, self.game.screen)
             y += 35
-        self.draw_text( self.player.name , self.game.title_font, TEXTSIZE, BLACK, 150, 125, self.game.screen)
-        self.draw_health_Bar(150, 150, self.player.health / self.player.maxHealth)
-        self.draw_text( self.Oponent.name , self.game.title_font, TEXTSIZE, BLACK, 500, 75, self.game.screen)
-        self.draw_health_Bar( 500, 100, self.Oponent.health / self.Oponent.maxHealth)
+        self.draw_text( self.player.name , self.game.title_font, TEXTSIZE, BLACK, 150, 112, self.game.screen)
+        self.draw_health_Bar(150, 150, int(self.player.health) / int(self.player.health))
+        self.draw_text( self.Oponent.name , self.game.title_font, TEXTSIZE, BLACK, 500, 62, self.game.screen)
+        self.draw_health_Bar( 500, 100, int(self.Oponent.health) / int(self.Oponent.health))
         x = 100
         y = 610
         for message in self.messagerLogger.shownMessageList:

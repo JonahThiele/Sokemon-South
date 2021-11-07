@@ -4,12 +4,12 @@
         "name": "Pukachoo",
         "stats": [
             {
-            "health": "60",
-            "attack": "85",
-            "defense": "50",
-            "sp. attack": "95",
-            "sp. defense": "85",
-            "speed": "110"
+                "health": "60",
+                "attack": "85",
+                "defense": "50",
+                "sp. attack": "95",
+                "sp. defense": "85",
+                "speed": "110"
             }
         ],
         "moves": [
