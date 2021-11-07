@@ -1,0 +1,167 @@
+{
+ "possibleDokemon": [
+    {
+        "name": "Pukachoo",
+        "stats": [
+            {
+                "health": "60",
+                "attack": "85",
+                "defense": "50",
+                "sp. attack": "95",
+                "sp. defense": "85",
+                "speed": "110"
+            }
+        ],
+        "moves": [
+            {
+                "id": "1",
+                "moveName": "Earth Power"
+            },
+            {
+                "id": "2",
+                "moveName": "Grassy Glide"
+            },
+            {
+                "id": "3",
+                "moveName": "Sticky Web"
+            },
+            {
+                "id": "4",
+                "moveName": "Air Cutter"
+            }
+        ]
+    },
+    {
+        "name": "Powellite",
+        "stats": [
+            {
+                "health": "100",
+                "attack": "100",
+                "defense": "100",
+                "sp. attack": "100",
+                "sp. defense": "100",
+                "speed": "100"
+            }
+        ],
+        "moves": [
+            {
+                "id": "1",
+                "moveName": "Dragon Claw"
+            },
+            {
+                "id": "2",
+                "moveName": "Dragon Breath"
+            },
+            {
+                "id": "3",
+                "moveName": "Rest"
+            },
+            {
+                "id": "4",
+                "moveName": "Perish Song"
+            }
+        ]
+    },
+    {
+        "name": "Whopper",
+        "stats": [
+            {
+            "health": "60",
+            "attack": "85",
+            "defense": "50",
+            "sp. attack": "95",
+            "sp. defense": "85",
+            "speed": "110"
+            }
+        ],
+        "moves": [
+            {
+                "id": "1",
+                "moveName": "Belly Drum"
+            },
+            {
+                "id": "2",
+                "moveName": "Belly Drum"
+            },
+            {
+                "id": "3",
+                "moveName": "Belly Drum"
+            },
+            {
+                "id": "4",
+                "moveName": "Belly Drum"
+            }
+        ]
+    },
+    {
+        "name": "Jr. Whopper",
+        "stats": [
+            {
+            "health": "30",
+            "attack": "42",
+            "defense": "25",
+            "sp. attack": "47",
+            "sp. defense": "42",
+            "speed": "220"
+            }
+        ],
+        "moves": [
+            {
+                "id": "1",
+                "moveName": "extreme speed"
+            },
+            {
+                "id": "2",
+                "moveName": "arial ace"
+            },
+            {
+                "id": "3",
+                "moveName": "quick attack"
+            },
+            {
+                "id": "4",
+                "moveName": "splash"
+            }
+        ]
+    },
+    {
+        "name": "Glizzy",
+        "stats":[
+            {
+                "health": "255",
+                "attack": "10",
+                "defense": "10",
+                "sp. attack": "75",
+                "sp. defense": "135",
+                "speed": "55"
+            }
+        ],
+        "moves": [
+            {
+                "id": "1",
+                "moveName": "Pound", 
+                "details": [
+                    {
+                        "PP": "35",
+                        "Power": "40",
+                        "Accuracy": "100"
+                    }
+                ]
+            },
+            {
+                "id": "2",
+                "moveName": "Growl"
+            },
+            {
+                "id": "3",
+                "moveName": "Tail Whip"
+            },
+            {
+                "id": "4",
+                "moveName": "Refresh"
+            }
+ 
+        ]
+    }
+    ]
+}

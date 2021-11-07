@@ -1,11 +1,30 @@
+import pygame as py
+import json
 import random as rd
+
+with open("dokemon.json") as dokemon_file:
+    data = json.load(dokemon_file)
+
 class Dokemon:
-    def __init__(self):
-        self.attks = [["nice1", 10], ["nice2", 10], ["nice3", 10], ["nice4", 10]]
-        self.health = 100
-        self.maxHealth = 100
-        self.speed = 0
-        self.name = None
+    def __init__(self, name, health, sp_defense, sp_attack, defense, speed, attack, attks):
+        self.name = name
+        self.health = health
+        self.sp_defense = sp_defense
+        self.sp_attack = sp_attack
+        self.defense = defense
+        self.speed = speed
+        self.attack = attack
+        self.maxHealth = health
+        self.moves = attks
+    
+    def moveSet(self):
+        for dokemon in data['possibleDokemon']:
+            if self.name == dokemon['name']:
+                for possibleMove in dokemon['moves']:
+                    move = possibleMove['moveName']
+                    self.attks.append(move)
+
+       
     def decideRandAttack(self, target):
         choice = rd.choice(self.attks)
         target.takeDamage(choice[1])
@@ -18,3 +37,19 @@ class Dokemon:
             return False
         else:
             return True
+        
+    
+
+dokemonList = []
+
+# for dokemon in data['possibleDokemon']:
+#     name = str(dokemon['name'])
+#     for stats in dokemon['stats']:
+#         health = stats['health']
+#         defense = stats['defense']
+#         speed = stats['speed']
+#         sp_attack = stats['sp. attack']
+#         sp_defense = stats['sp. defense']
+#         attack = stats['attack']
+#         new = Dokemon(name, health, sp_defense, sp_attack, defense, speed, attack, health)
+#     dokemonList.append(new)

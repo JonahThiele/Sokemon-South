@@ -9,7 +9,9 @@ LIGHTGREY = (100, 100, 100)
 GREEN = (0, 255, 0)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
+BLUE = (0, 0, 255)
 BROWN = (106, 55, 5)
+
 
 # game settings
 WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16

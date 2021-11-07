@@ -16,7 +16,7 @@ class Button():
         self.y = y
         self.width = width
         self.height = height
-        self.image = py.Surface([self.width, self.height])
+        self.image = py.Surface(self.width, self.height)
         self.Rect = self.image.get_rect()
         self.text = text
         
@@ -32,7 +32,7 @@ class Button():
             win.blit(text, (self.x + (self.width/2 - text.get_width()/2), self.y + (self.height/2 - text.get_height()/2)))
 
     def isOver(self, pos):
-        if self.Rect.collidepoint(pos):
+        if self.image.collidepoint(pos):
             return True
         return False
         

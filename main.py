@@ -1,7 +1,3 @@
-# KidsCanCode - Game Development with Pygame video series
-# Tile-based game - Part 1
-# Project setup
-# Video link: https://youtu.be/3UxnelT9aCo
 import pygame as py
 import sys
 from os import path
@@ -10,6 +6,14 @@ from sprites import *
 from tilemap import *
 from combat import *
 import random as rand
+
+
+
+# Colors
+white = (255, 255, 255)
+
+playing = False
+helpScreen = False
 
 # HUD functions
 # def draw_player_health(surf, x, y, pct):
@@ -59,6 +63,9 @@ class Game:
         font = py.font.Font(font_name, size)
         text_surface = font.render(text, True, color)
         text_rect = text_surface.get_rect()
+        outlineFont = py.font.Font(font_name, size)
+        text_surface = outlineFont.render(text, True, color)
+        text_rect = text_surface.get_rect()
         if align == 'nw':
             text_rect.topleft = (x, y)
         if align == 'ne':
@@ -88,7 +95,7 @@ class Game:
         music_folder = path.join(game_folder, 'music')
         img_folder = path.join(game_folder, 'img')
         self.map_folder = path.join(game_folder, 'maps')
-        self.title_font = path.join(img_folder, 'ZOMBIE.TTF')
+        self.title_font = path.join(img_folder, 'POKEMON.TTF')
         self.hud_font = path.join(img_folder, 'Impacted2.0.TTF')
         self.dim_screen = py.Surface(self.screen.get_size()).convert_alpha()
         self.dim_screen.fill((0, 0, 0, 180))
@@ -219,7 +226,14 @@ class Game:
     def capture_screen(self):
         pass
     def show_start_screen(self):
-        pass
+        py.display.set_caption(TITLE)
+        self.screen.fill(WHITE)
+        self.draw_text('Press any key to Play', self.title_font, 75, RED, WIDTH / 2, HEIGHT / 2, align='center')
+        self.draw_text('Press H for Help', self.title_font, 75, RED, WIDTH / 2, HEIGHT * 3 / 4, align='center')
+        self.draw_text('Sokemon South', self.title_font, 101, BLUE, WIDTH/2, HEIGHT / 2 - 100, align='center')
+        self.draw_text("Sokemon South", self.title_font, 100, YELLOW, WIDTH /2, HEIGHT / 2 - 100, align='center')
+        py.display.update()
+        self.wait_for_key()
 
     def show_go_screen(self):
         self.screen.fill(BLACK)
@@ -228,7 +242,15 @@ class Game:
         py.display.flip()
         self.wait_for_key()
 
+    def show_help_screen(self):
+        self.screen.fill(WHITE)
+        self.draw_text("Press escape to quit", self.title_font, 30, RED, WIDTH / 2, HEIGHT * .1, align='center')
+        self.draw_text("Use arrow keys or wasd to move", self.title_font, 30, RED, WIDTH /2, HEIGHT *3/ 4, align='center')
+        py.display.flip()
+        self.wait_for_key()
+
     def wait_for_key(self):
+        global playing, helpScreen
         py.event.wait()
         waiting = True
         while waiting:
@@ -239,10 +261,24 @@ class Game:
                     self.quit()
                 if event.type == py.KEYUP:
                     waiting = False
+                if event.type == py.KEYDOWN and event.key != py.K_ESCAPE and event.key != py.K_h:
+                    playing = True
+                if event.type == py.KEYDOWN and event.key == py.K_h:
+                    helpScreen = True
+                if event.type == py.KEYDOWN and event.key == py.K_ESCAPE:
+                    if helpScreen == True:
+                        helpScreen = False
+                    elif playing == True:
+                        playing = False
+                    else:
+                        py.quit()
+                        sys.exit()
 
 # create the game object
 g = Game()
-g.show_start_screen()
+
+
+
 while True:
     if g.start:
         g.new()
