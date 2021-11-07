@@ -32,7 +32,7 @@ class Items:
         self.messsage = MessagerLogger()
     def heal(self, user):
         user.health += (0.3 * user.maxHealth)
-        self.messsage.logMessage("You abilied a healing kit")
+        self.messsage.logMessage("You applied a healing kit")
         self.messsage.logMessage(user.name + " healed to  " + user.health + " hp")
 
 class Dokeball:
@@ -53,9 +53,12 @@ class Combat:
         self.wild_dokemon = None
         self.capture_background = game.combatBackground
         self.sprites = py.sprite.Group()
+        self.last_turn = 0
+        self.turn_delay = 500
         for dokemon in data['possibleDokemon']:
             #dumby vals
             movesList = []
+            powerList = []
             name = str(dokemon['name'])
             
             for stats in dokemon['stats']:
@@ -65,15 +68,19 @@ class Combat:
                 sp_attack = int(stats['sp. attack'])
                 sp_defense = int(stats['sp. defense'])
                 attack = int(stats['attack'])
+
             for moves in dokemon['moves']:
                 # add damage mod here
                 moveName = str(moves['moveName'])
                 number = moves['id']
                 movesList.append((moveName, number))
+                power = int(moves['details'][0]['power'])
+                powerList.append(power)
+
             for images in dokemon['images']:
                 image = images["sprite"]
-                print("image:" + image)
-            animal = Dokemon(name, health, sp_defense, sp_attack, defense, speed, attack, movesList, self, game, image)
+            
+            animal = Dokemon(name, health, sp_defense, sp_attack, defense, speed, attack, movesList, self, game, image, powerList)
             dokemonList.append(animal)
         self.menu = Menu(dokemonList[1])
         self.paused = False
@@ -91,14 +98,14 @@ class Combat:
     def draw_health_Bar(self, x, y, pct):
         if pct < 0:
             pct = 0
-        BAR_LENGTH = 100
+        BAR_LENGTH = 300
         BAR_HEIGHT = 20
         fill = pct * BAR_LENGTH
         outline_rect = py.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
         fill_rect = py.Rect(x, y, fill, BAR_HEIGHT)
-        if pct > 0.6:
+        if pct > 0.6 and pct <= 1:
             col = GREEN
-        elif pct > 0.3:
+        elif pct > 0.3 and pct <= 0.6:
             col = YELLOW
         else:
             col = RED
@@ -107,10 +114,13 @@ class Combat:
 
     def initialize(self):
         # what 
+        choice = rd.randint(0, len(dokemonList) - 1)
+
         self.player = dokemonList[0]
-        self.player.name = "Gerald"
-        self.Oponent = dokemonList[1]
-        self.Oponent.name = "Drake"
+        self.player.name = dokemonList[0].name
+        self.opponent = dokemonList[choice]
+        self.opponent.name = dokemonList[choice].name
+
         self.messagerLogger = MessagerLogger()
         self.sprites = py.sprite.Group()
 
@@ -134,24 +144,44 @@ class Combat:
                     if event.key == py. K_RIGHT or  event.key == py. K_d:
                         self.menu.selected += 3
                     if event.key == py. K_SPACE or event.key == py. K_RETURN:
-                        stillAlive = self.player.decideAttacks(self.menu.selected, self.Oponent)
-                        self.messagerLogger.logMessage(self.player.name + " used " + str(self.player.moves[self.menu.selected]))
-                        if not stillAlive:
-                            self.messagerLogger.logMessage(self.Oponent.name + " has fainted")
-                        waiting = False
+                        if self.menu.selected <= 3:
+                            stillAlive = self.player.decideAttacks(self.menu.selected, self.opponent)
+                            self.messagerLogger.logMessage(self.player.name + " used " + self.player.moves[self.menu.selected][1])
+                            waiting = False
+                            if not stillAlive:
+                                self.messagerLogger.logMessage(self.opponent.name + " has died")
+                                self.game.player.completed_comp = True
+                                self.game.world = True
+                                waiting = False
+                                self.player.health = self.player.maxHealth
+                                break
+                                
+                        elif self.menu.selected == 5:
+                            escape = rd.randint(1, 5)
+                            if escape >= 2: 
+                                self.playing = False
+                                self.game.player.completed_comp = True
+                                self.game.world = True
+                                self.player.health = self.player.maxHealth
+                                waiting = False
+
+
+                                break
+                            else:
+                                self.messagerLogger.logMessage("Failed to escape!")
                         
                     if event.key == py.K_p:
                         self.paused = not self.paused
                     
-                    if self.menu.selected > len(self.menu.options) - 1:
+                    if self.menu.selected > len(self.menu.options) -1:
                         self.menu.selected = 5
-                    if self.menu.selected < 0:
+                    if self.menu.selected < -1:
                         self.menu.selected = 0
 
     def decideturn(self):
-        if self.Oponent.speed > self.player.speed:
+        if self.opponent.speed > self.player.speed:
             self.playerFirst = False
-        elif self.Oponent.speed < self.player.speed:
+        elif self.opponent.speed < self.player.speed:
             self.playerFirst = True
         else:
             choice = rd.randint(0,1)
@@ -161,23 +191,29 @@ class Combat:
                 self.playerFirst = False
 
     def turn(self):
-        if self.turnNum % 2 == 0:
+        if self.turnNum % 2 == 1:
             if self.playerFirst:
                 self.events()
             else:
-                stillAlive = self.Oponent.decideRandAttack(self.player)
+                stillAlive = self.opponent.decideRandAttack(self.player)
 
-                self.messagerLogger.logMessage(self.player.name + " used " + self.Oponent.moves[self.menu.selected][0])
-                self.messagerLogger.logMessage(self.Oponent.name + " health decrease")
+                self.messagerLogger.logMessage(self.player.name + " used " + self.opponent.moves[self.menu.selected][0])
+                self.messagerLogger.logMessage(self.opponent.name + " health decrease")
                 if not stillAlive:
-                    self.messagerLogger.logMessage(self.Oponent.name + " is dead")
+                    self.messagerLogger.logMessage(self.opponent.name + " is dead")
+                    self.game.player.completed_comp = True
+                    self.game.world = True
+                    self.player.health = self.player.maxHealth
         else:
             if self.playerFirst:
-                stillAlive = self.Oponent.decideRandAttack(self.player)
+                stillAlive = self.opponent.decideRandAttack(self.player)
                 self.messagerLogger.logMessage(self.player.name + " used " + self.player.moves[self.menu.selected][0])
-                self.messagerLogger.logMessage(self.Oponent.name + " health decrease")
+                self.messagerLogger.logMessage(self.opponent.name + " health decrease")
                 if not stillAlive:
-                    self.messagerLogger.logMessage(self.Oponent.name + " has fainted")
+                    self.messagerLogger.logMessage(self.opponent.name + " is dead")
+                    self.game.player.completed_comp = True
+                    self.game.world = True
+                    waiting = False
                     
             else:
                 self.events()
@@ -191,9 +227,10 @@ class Combat:
         while self.playing:
             if(firstLoop):
                 self.update()
+                self.decideturn()
                 self.draw()
                 firstLoop = False
-            self.decideturn()
+            
             self.dt = self.game.clock.tick(FPS) / 1000
             self.turn()
             if not self.paused:
@@ -212,16 +249,19 @@ class Combat:
             else:
                 self.draw_text( i[0], self.game.title_font, TEXTSIZE, BLACK, x, y, self.game.screen)
             y += 55
-        self.draw_text( self.player.name , self.game.title_font, TEXTSIZE, BLACK, 800, 300, self.game.screen)
-        self.draw_health_Bar(800, 338, int(self.player.health) / int(self.player.health))
-        self.draw_text( self.Oponent.name , self.game.title_font, TEXTSIZE, BLACK, 265, 62, self.game.screen)
-        self.draw_health_Bar(265, 100, int(self.Oponent.health) / int(self.Oponent.health))
+        self.draw_text((self.player.name + " - Gerald") , self.game.title_font, TEXTSIZE, BLACK, 325, 290, self.game.screen)
+        self.draw_health_Bar(325, 338, int(self.player.health) / int(self.player.maxHealth))
+        self.draw_text((self.opponent.name + " - Drake") , self.game.title_font, TEXTSIZE, BLACK, 255, 62, self.game.screen)
+        self.draw_health_Bar(255, 100, int(self.opponent.health) / int(self.opponent.maxHealth))
         x = 50
         y = 450
         for message in self.messagerLogger.shownMessageList:
-            self.draw_text(message, self.game.title_font, TEXTSIZE, BLACK, x, y, self.game.screen)
+            self.draw_text(message, self.game.title_font, OTHERSIZE, BLACK, x, y, self.game.screen)
             y += 35
+        self.opponent.draw(self.game.screen, 700, 50)
+        self.player.draw(self.game.screen, 100, 200)
         py.display.flip()
+
 
     def update(self):
         py.display.set_caption("{:.2f}".format(self.game.clock.get_fps()))

@@ -10,11 +10,11 @@ with open("dokemon.json") as dokemon_file:
 
 
 class Dokemon(py.sprite.Sprite):
-    def __init__(self, name, health, sp_defense, sp_attack, defense, speed, attack, attks, combat, game, img_file):
+    def __init__(self, name, health, sp_defense, sp_attack, defense, speed, attack, attks, combat, game, img_file, powerlist):
         self.groups = combat.sprites
         py.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = py.image.load(os.path.join(game.img_folder, img_file)).convert_alpha()
+        self.image = py.transform.scale(py.image.load(os.path.join(game.img_folder, img_file)).convert_alpha(), (150, 150))
         self.rect = self.image.get_rect()
         self.name = name
         self.health = health
@@ -25,15 +25,22 @@ class Dokemon(py.sprite.Sprite):
         self.attack = attack
         self.maxHealth = health
         self.moves = attks
-               
+        self.power = powerlist
+
+    def draw(self, surface, x, y):
+        surface.blit(self.image, (x, y))
+
     def decideRandAttack(self, target):
-        choice = rd.choice(self.moves)
-        target.takeDamage(choice[1])
+        choice = rd.randint(0, 3)
+        target.takeDamage(self, choice)
     def decideAttacks(self, choice, target):
-        alive = target.takeDamage(self.moves[choice][1])
+        alive = target.takeDamage(self, choice)
         return alive
-    def takeDamage(self, damage):
-        self.health -= int(damage)
+    def takeDamage(self, attacker, index):
+        totalDamage = (2/5 + 2 * attacker.power[index] * attacker.attack / self.defense) / 50 + 2
+        self.health -= totalDamage
+
+
         if self.health <= 0:
             return False
         else:

@@ -72,7 +72,6 @@ class Player(py.sprite.Sprite):
         self.walk_state = 0
         self.last_dir = "None"
 
-
     def get_keys(self):
         self.rot_speed = 0
         self.vel = vec(0, 0)
