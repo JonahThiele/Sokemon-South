@@ -15,35 +15,6 @@ white = (255, 255, 255)
 playing = False
 helpScreen = False
 
-# HUD functions
-# def draw_player_health(surf, x, y, pct):
-#     if pct < 0:
-#         pct = 0
-#     BAR_LENGTH = 100
-#     BAR_HEIGHT = 20
-#     fill = pct * BAR_LENGTH
-#     outline_rect = py.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
-#     fill_rect = py.Rect(x, y, fill, BAR_HEIGHT)
-#     if pct > 0.6:
-#         col = GREEN
-#     elif pct > 0.3:
-#         col = YELLOW
-#     else:
-#         col = RED
-#     py.draw.rect(surf, col, fill_rect)
-#     py.draw.rect(surf, WHITE, outline_rect, 2)
-# def draw_player_ammo(surf, x, y, pct):
-#     if pct < 0:
-#         pct = 0
-#     BAR_LENGTH = 100
-#     BAR_HEIGHT = 20
-#     fill = pct * BAR_LENGTH
-#     outline_rect = py.Rect(x, y, BAR_LENGTH, BAR_HEIGHT)
-#     fill_rect = py.Rect(x, y, fill, BAR_HEIGHT)
-#     col = RED
-#     py.draw.rect(surf, col, fill_rect)
-#     py.draw.rect(surf, WHITE, outline_rect, 2)
-
 class Game:
     def __init__(self):
         py.mixer.pre_init(44100, -16, 1, 2048)
@@ -102,7 +73,7 @@ class Game:
         self.map = TiledMap(path.join(self.map_folder, 'jungle.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
-        self.combatBackground = py.image.load(path.join(img_folder,'combatBackground.png'))
+        self.combatBackground = py.image.load(path.join(img_folder,'newCombatBackground.png'))
     
         self.player_img = py.image.load(path.join(img_folder, PLAYER_IMG)).convert_alpha()
         self.wall_img = py.image.load(path.join(img_folder, WALL_IMG)).convert_alpha()
@@ -118,14 +89,6 @@ class Game:
         self.map = TiledMap(path.join(self.map_folder, 'jungle.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
-        # for row, tiles in enumerate(self.map.data):
-        #     for col, tile in enumerate(tiles):
-        #         if tile == '1':
-        #             Wall(self, col, row)
-        #         if tile == 'M':
-        #             Mob(self, col, row)
-        #         if tile == 'P':
-        #             self.player = Player(self, col, row)
         for tile_object in self.map.tmxdata.objects:
             obj_center = vec(tile_object.x + tile_object.width / 2, tile_object.y + tile_object.height / 2)
             if tile_object.name == 'player':
@@ -164,22 +127,6 @@ class Game:
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
-        # game over?
-        #if len(self.mobs) == 0:
-            #self.playing = False
-        # player hits items
-        # hits = py.sprite.spritecollide(self.player, self.items, False)
-        # for hit in hits:
-        #     if hit.type == 'health' and self.player.health < PLAYER_HEALTH:
-        #         hit.kill()
-        #         self.effects_sounds['health_up'].play()
-        #         self.player.add_health(HEALTH_PACK_AMOUNT)
-        #     if hit.type == 'shotgun':
-        #         hit.kill()
-        #         self.effects_sounds['gun_pickup'].play()
-        #         self.player.weapon = 'shotgun'
-        # mobs hit player  
-        # bullets hit mobs
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
@@ -230,8 +177,8 @@ class Game:
         self.screen.fill(WHITE)
         self.draw_text('Press any key to Play', self.title_font, 75, RED, WIDTH / 2, HEIGHT / 2, align='center')
         self.draw_text('Press H for Help', self.title_font, 75, RED, WIDTH / 2, HEIGHT * 3 / 4, align='center')
-        self.draw_text('Dokemon South', self.title_font, 101, BLUE, WIDTH/2, HEIGHT / 2 - 100, align='center')
-        self.draw_text("Dokemon South", self.title_font, 100, YELLOW, WIDTH /2, HEIGHT / 2 - 100, align='center')
+        self.draw_text('Sokemon South', self.title_font, 101, BLUE, WIDTH/2, HEIGHT / 2 - 100, align='center')
+        self.draw_text("Sokemon South", self.title_font, 100, YELLOW, WIDTH /2, HEIGHT / 2 - 100, align='center')
         py.display.update()
         self.wait_for_key()
 
@@ -245,6 +192,8 @@ class Game:
     def show_help_screen(self):
         self.screen.fill(WHITE)
         self.draw_text("Press escape to quit", self.title_font, 30, RED, WIDTH / 2, HEIGHT * .1, align='center')
+        self.draw_text("Sokemon South", self.title_font, 101, BLUE, WIDTH / 2, HEIGHT / 2, align = 'center')
+        self.draw_text("Sokemon South", self.title_font, 100, YELLOW, WIDTH/2, HEIGHT / 2, align = 'center')
         self.draw_text("Use arrow keys or wasd to move", self.title_font, 30, RED, WIDTH /2, HEIGHT *3/ 4, align='center')
         py.display.flip()
         self.wait_for_key()

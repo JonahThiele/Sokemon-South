@@ -156,7 +156,8 @@ class Combat:
                 self.messagerLogger.logMessage(self.player.name + " used " + self.player.moves[self.menu.selected][0])
                 self.messagerLogger.logMessage(self.Oponent.name + " health decrease")
                 if not stillAlive:
-                    self.messagerLogger.logMessage(self.Oponent.name + " is dead")
+                    self.messagerLogger.logMessage(self.Oponent.name + " has fainted")
+                    
             else:
                 self.events()
         self.turnNum += 1
@@ -179,23 +180,23 @@ class Combat:
             self.draw()
 
     def draw(self):
-        y = 610
+        y = 450
         x = 520
         for i in self.menu.options:
             if(i[0] == "bag"):
                 x += 350
-                y = 610
+                y = 500
             if self.menu.options[self.menu.selected] == i:
                 self.draw_text( i[0] , self.game.title_font, TEXTSIZE, YELLOW, x, y, self.game.screen)
             else:
                 self.draw_text( i[0], self.game.title_font, TEXTSIZE, BLACK, x, y, self.game.screen)
-            y += 35
-        self.draw_text( self.player.name , self.game.title_font, TEXTSIZE, BLACK, 150, 112, self.game.screen)
-        self.draw_health_Bar(150, 150, int(self.player.health) / int(self.player.health))
-        self.draw_text( self.Oponent.name , self.game.title_font, TEXTSIZE, BLACK, 500, 62, self.game.screen)
-        self.draw_health_Bar( 500, 100, int(self.Oponent.health) / int(self.Oponent.health))
-        x = 100
-        y = 610
+            y += 55
+        self.draw_text( self.player.name , self.game.title_font, TEXTSIZE, BLACK, 800, 300, self.game.screen)
+        self.draw_health_Bar(800, 338, int(self.player.health) / int(self.player.health))
+        self.draw_text( self.Oponent.name , self.game.title_font, TEXTSIZE, BLACK, 265, 62, self.game.screen)
+        self.draw_health_Bar(265, 100, int(self.Oponent.health) / int(self.Oponent.health))
+        x = 50
+        y = 450
         for message in self.messagerLogger.shownMessageList:
             self.draw_text(message, self.game.title_font, TEXTSIZE, BLACK, x, y, self.game.screen)
             y += 35
