@@ -16,23 +16,16 @@ class Dokemon:
         self.attack = attack
         self.maxHealth = health
         self.moves = attks
-    
-    def moveSet(self):
-        for dokemon in data['possibleDokemon']:
-            if self.name == dokemon['name']:
-                for possibleMove in dokemon['moves']:
-                    move = possibleMove['moveName']
-                    self.attks.append(move)
 
        
     def decideRandAttack(self, target):
-        choice = rd.choice(self.attks)
+        choice = rd.choice(self.moves)
         target.takeDamage(choice[1])
     def decideAttacks(self, choice, target):
-        alive = target.takeDamage(self.attks[choice][1])
+        alive = target.takeDamage(self.moves[choice][1])
         return alive
     def takeDamage(self, damage):
-        self.health -= damage
+        self.health -= int(damage)
         if self.health <= 0:
             return False
         else:

@@ -230,8 +230,8 @@ class Game:
         self.screen.fill(WHITE)
         self.draw_text('Press any key to Play', self.title_font, 75, RED, WIDTH / 2, HEIGHT / 2, align='center')
         self.draw_text('Press H for Help', self.title_font, 75, RED, WIDTH / 2, HEIGHT * 3 / 4, align='center')
-        self.draw_text('Sokemon South', self.title_font, 101, BLUE, WIDTH/2, HEIGHT / 2 - 100, align='center')
-        self.draw_text("Sokemon South", self.title_font, 100, YELLOW, WIDTH /2, HEIGHT / 2 - 100, align='center')
+        self.draw_text('Dokemon South', self.title_font, 101, BLUE, WIDTH/2, HEIGHT / 2 - 100, align='center')
+        self.draw_text("Dokemon South", self.title_font, 100, YELLOW, WIDTH /2, HEIGHT / 2 - 100, align='center')
         py.display.update()
         self.wait_for_key()
 
@@ -280,15 +280,21 @@ g = Game()
 
 
 while True:
-    if g.start:
-        g.new()
-        g.start = False
-    if g.world:
-        g.run()
-        g.world = False
-    if g.combat:
-        g.combat_screen()
-        g.combat = False
-    if g.end:
-        g.show_go_screen()
-        g.end = False
+    g.show_start_screen()
+    while helpScreen == True:
+        g.show_help_screen()
+
+
+    while playing == True:
+        if g.start:
+            g.new()
+            g.start = False
+        if g.world:
+            g.run()
+            g.world = False
+        if g.combat:
+            g.combat_screen()
+            g.combat = False
+        if g.end:
+            g.show_go_screen()
+            g.end = False

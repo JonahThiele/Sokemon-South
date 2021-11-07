@@ -39,12 +39,12 @@ class Combat:
             name = str(dokemon['name'])
             
             for stats in dokemon['stats']:
-                health = stats['health']
-                defense = stats['defense']
-                speed = stats['speed']
-                sp_attack = stats['sp. attack']
-                sp_defense = stats['sp. defense']
-                attack = stats['attack']
+                health = int(stats['health'])
+                defense = int(stats['defense'])
+                speed = int(stats['speed'])
+                sp_attack = int(stats['sp. attack'])
+                sp_defense = int(stats['sp. defense'])
+                attack = int(stats['attack'])
             for moves in dokemon['moves']:
                 # add damage mod here
                 moveName = str(moves['moveName'])
@@ -114,17 +114,16 @@ class Combat:
                         self.menu.selected += 3
                     if event.key == py. K_SPACE or event.key == py. K_RETURN:
                         stillAlive = self.player.decideAttacks(self.menu.selected, self.Oponent)
-                        self.messagerLogger.logMessage(self.player.name + " used " + self.player.attks[self.menu.selected][0])
-                        self.messagerLogger.logMessage(self.Oponent.name + " health decrease")
+                        self.messagerLogger.logMessage(self.player.name + " used " + str(self.player.moves[self.menu.selected]))
                         if not stillAlive:
-                            self.messagerLogger.logMessage(self.Oponent.name + " is dead")
+                            self.messagerLogger.logMessage(self.Oponent.name + " has fainted")
                         waiting = False
                         
                     if event.key == py.K_p:
                         self.paused = not self.paused
                     
-                    if self.menu.selected > 6:
-                        self.menu.selected = 6
+                    if self.menu.selected > len(self.menu.options) - 1:
+                        self.menu.selected = 5
                     if self.menu.selected < 0:
                         self.menu.selected = 0
 
@@ -147,14 +146,14 @@ class Combat:
             else:
                 stillAlive = self.Oponent.decideRandAttack(self.player)
 
-                self.messagerLogger.logMessage(self.player.name + " used " + self.Oponent.attks[self.menu.selected][0])
+                self.messagerLogger.logMessage(self.player.name + " used " + self.Oponent.moves[self.menu.selected][0])
                 self.messagerLogger.logMessage(self.Oponent.name + " health decrease")
                 if not stillAlive:
                     self.messagerLogger.logMessage(self.Oponent.name + " is dead")
         else:
             if self.playerFirst:
                 stillAlive = self.Oponent.decideRandAttack(self.player)
-                self.messagerLogger.logMessage(self.player.name + " used " + self.player.attks[self.menu.selected][0])
+                self.messagerLogger.logMessage(self.player.name + " used " + self.player.moves[self.menu.selected][0])
                 self.messagerLogger.logMessage(self.Oponent.name + " health decrease")
                 if not stillAlive:
                     self.messagerLogger.logMessage(self.Oponent.name + " is dead")

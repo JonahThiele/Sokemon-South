@@ -4,30 +4,58 @@
         "name": "Pukachoo",
         "stats": [
             {
-                "health": "60",
-                "attack": "85",
-                "defense": "50",
-                "sp. attack": "95",
-                "sp. defense": "85",
-                "speed": "110"
+            "health": "60",
+            "attack": "85",
+            "defense": "50",
+            "sp. attack": "95",
+            "sp. defense": "85",
+            "speed": "110"
             }
         ],
         "moves": [
             {
                 "id": "1",
-                "moveName": "Earth Power"
+                "moveName": "Earth Power",
+                "details": [
+                    {
+                        "pp": "10",
+                        "power": "90",
+                        "accuracy": "100"
+                    }
+                ]
             },
             {
                 "id": "2",
-                "moveName": "Grassy Glide"
+                "moveName": "Grassy Glide",
+                "details": [
+                    {
+                        "pp": "20",
+                        "power": "70",
+                        "accuracy": "100"
+                    }
+                ]
             },
             {
                 "id": "3",
-                "moveName": "Sticky Web"
+                "moveName": "Guillotine",
+                "details": [
+                    {
+                        "pp": "5",
+                        "power": "max",
+                        "accuracy": "30"
+                    }
+                ]
             },
             {
                 "id": "4",
-                "moveName": "Air Cutter"
+                "moveName": "Air Cutter",
+                "details": [
+                    {
+                        "pp": "25",
+                        "power": "60",
+                        "accuracy": "95"
+                    }
+                ]
             }
         ]
     },
@@ -46,19 +74,47 @@
         "moves": [
             {
                 "id": "1",
-                "moveName": "Dragon Claw"
+                "moveName": "Dragon Claw",
+                "details": [
+                    {
+                        "pp": "15",
+                        "power": "80",
+                        "accuracy": "100"
+                    }
+                ]
             },
             {
                 "id": "2",
-                "moveName": "Dragon Breath"
+                "moveName": "Dragon Breath",
+                "details": [
+                    {
+                        "pp": "20",
+                        "power": "60",
+                        "accuracy": "100"
+                    }
+                ]
             },
             {
                 "id": "3",
-                "moveName": "Rest"
+                "moveName": "Guillotine",
+                "details": [
+                    {
+                        "pp": "5",
+                        "power": "max",
+                        "accuracy": "30"
+                    }
+                ]
             },
             {
                 "id": "4",
-                "moveName": "Perish Song"
+                "moveName": "Sheer Cold",
+                "details": [
+                    {
+                        "pp": "5",
+                        "power": "max",
+                        "accuracy": "30"
+                    }
+                ]
             }
         ]
     },
@@ -77,19 +133,47 @@
         "moves": [
             {
                 "id": "1",
-                "moveName": "Belly Drum"
+                "moveName": "Body Slam",
+                "details": [
+                    {
+                        "pp": "15",
+                        "power": "85",
+                        "accuracy": "100"
+                    }
+                ]
             },
             {
                 "id": "2",
-                "moveName": "Belly Drum"
+                "moveName": "Consume Burger",
+                "details": [
+                    {
+                        "pp": "10",
+                        "power": "heal",
+                        "accuracy": "100"
+                    }
+                ]
             },
             {
                 "id": "3",
-                "moveName": "Belly Drum"
+                "moveName": "Astonish",
+                "details": [
+                    {
+                        "pp": "15",
+                        "power": "30",
+                        "accuracy": "100"
+                    }
+                ]
             },
             {
                 "id": "4",
-                "moveName": "Belly Drum"
+                "moveName": "Ominous Wind",
+                "details": [
+                    {
+                        "pp": "5",
+                        "power": "60",
+                        "accuracy": "100"
+                    }
+                ]
             }
         ]
     },
@@ -108,59 +192,48 @@
         "moves": [
             {
                 "id": "1",
-                "moveName": "extreme speed"
-            },
-            {
-                "id": "2",
-                "moveName": "arial ace"
-            },
-            {
-                "id": "3",
-                "moveName": "quick attack"
-            },
-            {
-                "id": "4",
-                "moveName": "splash"
-            }
-        ]
-    },
-    {
-        "name": "Glizzy",
-        "stats":[
-            {
-                "health": "255",
-                "attack": "10",
-                "defense": "10",
-                "sp. attack": "75",
-                "sp. defense": "135",
-                "speed": "55"
-            }
-        ],
-        "moves": [
-            {
-                "id": "1",
-                "moveName": "Pound", 
+                "moveName": "extreme speed",
                 "details": [
                     {
-                        "PP": "35",
-                        "Power": "40",
-                        "Accuracy": "100"
+                        "pp": "5",
+                        "power": "80",
+                        "accuracy": "100"
                     }
                 ]
             },
             {
                 "id": "2",
-                "moveName": "Growl"
+                "moveName": "aerial ace",
+                "details": [
+                    {
+                        "pp": "20",
+                        "power": "60",
+                        "accuracy": "100"
+                    }
+                ]
             },
             {
                 "id": "3",
-                "moveName": "Tail Whip"
+                "moveName": "quick attack",
+                "details": [
+                    {
+                        "pp": "30",
+                        "power": "40",
+                        "accuracy": "100"
+                    }
+                ]
             },
             {
                 "id": "4",
-                "moveName": "Refresh"
+                "moveName": "splash",
+                "details": [
+                    {
+                        "pp": "40",
+                        "power": "0",
+                        "accuracy": "0"
+                    }
+                ]
             }
- 
         ]
     }
     ]
