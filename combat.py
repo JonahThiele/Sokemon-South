@@ -109,8 +109,8 @@ class Combat:
         # what 
         self.player = dokemonList[0]
         self.player.name = "Gerald"
-        self.Oponent = dokemonList[1]
-        self.Oponent.name = "Drake"
+        self.opponent = dokemonList[1]
+        self.opponent.name = "Drake"
         self.messagerLogger = MessagerLogger()
         self.sprites = py.sprite.Group()
 
@@ -134,12 +134,18 @@ class Combat:
                     if event.key == py. K_RIGHT or  event.key == py. K_d:
                         self.menu.selected += 3
                     if event.key == py. K_SPACE or event.key == py. K_RETURN:
-                        stillAlive = self.player.decideAttacks(self.menu.selected, self.Oponent)
-                        self.messagerLogger.logMessage(self.player.name + " used " + self.player.moves[self.menu.selected][0])
-                        self.messagerLogger.logMessage(self.Oponent.name + " health decrease")
-                        if not stillAlive:
-                            self.messagerLogger.logMessage(self.Oponent.name + " is dead")
-                        waiting = False
+                        if self.menu.selected <=3 or self.menu.selected <= 0:
+                            stillAlive = self.player.decideAttacks(self.menu.selected, self.opponent)
+                            self.messagerLogger.logMessage(self.player.name + " used " + self.player.moves[self.menu.selected][0])
+                            self.messagerLogger.logMessage(self.opponent.name + " health decrease")
+                            if not stillAlive:
+                                self.messagerLogger.logMessage(self.opponent.name + " is dead")
+                                waiting = False
+                        elif self.menu.selected == 5:
+                            self.playing = False
+                            self.game.world = True
+                            waiting = False 
+                            break
                         
                     if event.key == py.K_p:
                         self.paused = not self.paused
@@ -150,9 +156,9 @@ class Combat:
                         self.menu.selected = 0
 
     def decideturn(self):
-        if self.Oponent.speed > self.player.speed:
+        if self.opponent.speed > self.player.speed:
             self.playerFirst = False
-        elif self.Oponent.speed < self.player.speed:
+        elif self.opponent.speed < self.player.speed:
             self.playerFirst = True
         else:
             choice = rd.randint(0,1)
@@ -166,19 +172,19 @@ class Combat:
             if self.playerFirst:
                 self.events()
             else:
-                stillAlive = self.Oponent.decideRandAttack(self.player)
+                stillAlive = self.opponent.decideRandAttack(self.player)
 
-                self.messagerLogger.logMessage(self.player.name + " used " + self.Oponent.attks[self.menu.selected][0])
-                self.messagerLogger.logMessage(self.Oponent.name + " health decrease")
+                self.messagerLogger.logMessage(self.player.name + " used " + self.opponent.attks[self.menu.selected][0])
+                self.messagerLogger.logMessage(self.opponent.name + " health decrease")
                 if not stillAlive:
-                    self.messagerLogger.logMessage(self.Oponent.name + " is dead")
+                    self.messagerLogger.logMessage(self.opponent.name + " is dead")
         else:
             if self.playerFirst:
-                stillAlive = self.Oponent.decideRandAttack(self.player)
+                stillAlive = self.opponent.decideRandAttack(self.player)
                 self.messagerLogger.logMessage(self.player.name + " used " + self.player.attks[self.menu.selected][0])
-                self.messagerLogger.logMessage(self.Oponent.name + " health decrease")
+                self.messagerLogger.logMessage(self.opponent.name + " health decrease")
                 if not stillAlive:
-                    self.messagerLogger.logMessage(self.Oponent.name + " is dead")
+                    self.messagerLogger.logMessage(self.opponent.name + " is dead")
             else:
                 self.events()
         self.turnNum += 1
@@ -201,27 +207,30 @@ class Combat:
             self.draw()
 
     def draw(self):
-        y = 610
+        y = 450
         x = 520
         for i in self.menu.options:
             if(i[0] == "bag"):
                 x += 350
-                y = 610
+                y = 500
             if self.menu.options[self.menu.selected] == i:
                 self.draw_text( i[0] , self.game.title_font, TEXTSIZE, YELLOW, x, y, self.game.screen)
             else:
                 self.draw_text( i[0], self.game.title_font, TEXTSIZE, BLACK, x, y, self.game.screen)
-            y += 35
-        self.draw_text( self.player.name , self.game.title_font, TEXTSIZE, BLACK, 150, 112, self.game.screen)
-        self.draw_health_Bar(150, 150, int(self.player.health) / int(self.player.health))
-        self.draw_text( self.Oponent.name , self.game.title_font, TEXTSIZE, BLACK, 500, 62, self.game.screen)
-        self.draw_health_Bar( 500, 100, int(self.Oponent.health) / int(self.Oponent.health))
-        x = 100
-        y = 610
+            y += 55
+        self.draw_text( self.player.name , self.game.title_font, TEXTSIZE, BLACK, 800, 300, self.game.screen)
+        self.draw_health_Bar(800, 338, int(self.player.health) / int(self.player.health))
+        self.draw_text( self.opponent.name , self.game.title_font, TEXTSIZE, BLACK, 265, 62, self.game.screen)
+        self.draw_health_Bar( 265, 100, int(self.opponent.health) / int(self.opponent.health))
+        x = 50
+        y = 450
         for message in self.messagerLogger.shownMessageList:
             self.draw_text(message, self.game.title_font, TEXTSIZE, BLACK, x, y, self.game.screen)
             y += 35
+        self.opponent.draw(self.game.screen, 700, 50)
+        self.player.draw(self.game.screen, 200, 500)
         py.display.flip()
+
 
     def update(self):
         py.display.set_caption("{:.2f}".format(self.game.clock.get_fps()))
