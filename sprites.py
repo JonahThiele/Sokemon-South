@@ -8,6 +8,13 @@ from math import atan2, pi
 import random as rd
 vec = py.math.Vector2
 
+def strip_from_sheet(sheet, start, size, columns, rows=1):
+    frames = []
+    for j in range(rows):
+        for i in range(columns):
+            location = (start[0]+size[0]*i, start[1]+size[1]*j)
+            frames.append(sheet.subsurface(py.Rect(location,size)))
+    return frames
 
 def collide_with_walls(sprite, group, dir):
     if dir == 'x':
@@ -52,7 +59,7 @@ class Player(py.sprite.Sprite):
         self.groups = game.all_sprites
         py.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = game.player_img
+        self.image = game.player_images[0]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.hit_rect = PLAYER_HIT_RECT
@@ -62,6 +69,8 @@ class Player(py.sprite.Sprite):
         self.rot = 0
         self.health = PLAYER_HEALTH
         self.bag = []
+        self.walk_state = 0
+        self.last_dir = "None"
 
 
     def get_keys(self):
@@ -70,15 +79,23 @@ class Player(py.sprite.Sprite):
         keys = py.key.get_pressed()
         mouse_buttons = py.mouse.get_pressed()
         if keys[py.K_UP] or keys[py.K_w]:
+            if not self.last_dir == "up" or self.walk_state == 3:
+                self.walk_state = 0
             self.vel = vec(0, -PLAYER_SPEED)
             return "up"
         if keys[py.K_DOWN] or keys[py.K_s]:
+            if not self.last_dir == "down" or self.walk_state == 3:
+                self.walk_state = 0
             self.vel = vec(0, PLAYER_SPEED)
             return "down"
         if keys[py.K_RIGHT] or keys[py.K_d]:
+            if not self.last_dir == "right" or self.walk_state == 3:
+                self.walk_state = 0
             self.vel = vec(PLAYER_SPEED, 0)
             return "right"
         if keys[py.K_LEFT] or keys[py.K_a]:
+            if not self.last_dir == "left" or self.walk_state == 3:
+                self.walk_state = 0
             self.vel = vec(-PLAYER_SPEED, 0)
             return "left"
 
@@ -100,6 +117,8 @@ class Player(py.sprite.Sprite):
 
     def update(self):
         dir = self.get_keys()
+        self.last_dir = dir
+        self.image = self.game.player_images[self.walk_state]
         self.rotate(dir)
 
         self.rect = self.image.get_rect()
@@ -138,6 +157,7 @@ class Wild_Area(py.sprite.Sprite):
         self.y = y
         self.rect.x = x 
         self.rect.y = y 
+
 
 class NPC(py.sprite.Sprite):
     def __init__(self, game, x, y):
