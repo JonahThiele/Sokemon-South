@@ -15,7 +15,7 @@ BROWN = (106, 55, 5)
 
 # game settings
 WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
-HEIGHT = 768  # 16 * 48 or 32 * 24 or 64 * 12
+HEIGHT = 683  # 16 * 48 or 32 * 24 or 64 * 12
 FPS = 60
 TITLE = "Sokemon South"
 BGCOLOR = BROWN
@@ -30,7 +30,7 @@ WALL_IMG = 'tileGreen_39.png'
 PLAYER_HEALTH = 100
 PLAYER_SPEED = 300
 PLAYER_ROT_SPEED = 250
-PLAYER_IMG = 'basic_snail.png'
+PLAYER_IMG = 'Gerald.png'
 PLAYER_HIT_RECT = py.Rect(0, 0, 35, 35)
 BARREL_OFFSET = vec(30, 10)
 

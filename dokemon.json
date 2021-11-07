@@ -1,148 +1,260 @@
 {
- "possibleDokemon": [
-    {
-        "name": "Pukachoo",
-        "stats": [
-            {
-                "health": "60",
-                "attack": "85",
-                "defense": "50",
-                "sp. attack": "95",
-                "sp. defense": "85",
-                "speed": "110"
-            }
-        ],
-        "moves": [
-            {
-                "id": "1",
-                "moveName": "Earth Power"
-            },
-            {
-                "id": "2",
-                "moveName": "Grassy Glide"
-            },
-            {
-                "id": "3",
-                "moveName": "Sticky Web"
-            },
-            {
-                "id": "4",
-                "moveName": "Air Cutter"
-            }
-        ],
-        "images": [
-            {
-                "sprite": "Puckachoo.png"
-            }
-        ]
-    },
-    {
-        "name": "Powellite",
-        "stats": [
-            {
-                "health": "100",
-                "attack": "100",
-                "defense": "100",
-                "sp. attack": "100",
-                "sp. defense": "100",
-                "speed": "100"
-            }
-        ],
-        "moves": [
-            {
-                "id": "1",
-                "moveName": "Dragon Claw"
-            },
-            {
-                "id": "2",
-                "moveName": "Dragon Breath"
-            },
-            {
-                "id": "3",
-                "moveName": "Rest"
-            },
-            {
-                "id": "4",
-                "moveName": "Perish Song"
-            }
-        ],
-        "images": [
-            {
-                "sprite": "powerllite.png"
-            }
-        ]
-    },
-    {
-        "name": "Whopper",
-        "stats": [
-            {
-            "health": "60",
-            "attack": "85",
-            "defense": "50",
-            "sp. attack": "95",
-            "sp. defense": "85",
-            "speed": "110"
-            }
-        ],
-        "moves": [
-            {
-                "id": "1",
-                "moveName": "Belly Drum"
-            },
-            {
-                "id": "2",
-                "moveName": "Belly Drum"
-            },
-            {
-                "id": "3",
-                "moveName": "Belly Drum"
-            },
-            {
-                "id": "4",
-                "moveName": "Belly Drum"
-            }
-        ],
-        "images": [
-            {
-                "sprite": "Whopper.png"
-            }
-        ]
-    },
-    {
-        "name": "Jr. Whopper",
-        "stats": [
-            {
-            "health": "30",
-            "attack": "42",
-            "defense": "25",
-            "sp. attack": "47",
-            "sp. defense": "42",
-            "speed": "220"
-            }
-        ],
-        "moves": [
-            {
-                "id": "1",
-                "moveName": "extreme speed"
-            },
-            {
-                "id": "2",
-                "moveName": "arial ace"
-            },
-            {
-                "id": "3",
-                "moveName": "quick attack"
-            },
-            {
-                "id": "4",
-                "moveName": "splash"
-            }
-        ],
-        "images": [
-            {
-                "sprite": ".png"
-            }
-        ]
-    }
-    ]
-}
+    "possibleDokemon": [
+       {
+           "name": "Pukachoo",
+           "stats": [
+               {
+               "health": "60",
+               "attack": "85",
+               "defense": "50",
+               "sp. attack": "95",
+               "sp. defense": "85",
+               "speed": "110"
+               }
+           ],
+           "moves": [
+               {
+                   "id": "1",
+                   "moveName": "Earth Power",
+                   "details": [
+                       {
+                           "pp": "10",
+                           "power": "90",
+                           "accuracy": "100"
+                       }
+                   ]
+               },
+               {
+                   "id": "2",
+                   "moveName": "Grassy Glide",
+                   "details": [
+                       {
+                           "pp": "20",
+                           "power": "70",
+                           "accuracy": "100"
+                       }
+                   ]
+               },
+               {
+                   "id": "3",
+                   "moveName": "Guillotine",
+                   "details": [
+                       {
+                           "pp": "5",
+                           "power": "max",
+                           "accuracy": "30"
+                       }
+                   ]
+               },
+               {
+                   "id": "4",
+                   "moveName": "Air Cutter",
+                   "details": [
+                       {
+                           "pp": "25",
+                           "power": "60",
+                           "accuracy": "95"
+                       }
+                   ]
+               }
+           ],
+           "images": [
+               {
+                   "sprite": "Pukachoo.png"
+               }
+           ]
+       },
+       {
+           "name": "Powellite",
+           "stats": [
+               {
+                   "health": "100",
+                   "attack": "100",
+                   "defense": "100",
+                   "sp. attack": "100",
+                   "sp. defense": "100",
+                   "speed": "100"
+               }
+           ],
+           "moves": [
+               {
+                   "id": "1",
+                   "moveName": "Dragon Claw",
+                   "details": [
+                       {
+                           "pp": "15",
+                           "power": "80",
+                           "accuracy": "100"
+                       }
+                   ]
+               },
+               {
+                   "id": "2",
+                   "moveName": "Dragon Breath",
+                   "details": [
+                       {
+                           "pp": "20",
+                           "power": "60",
+                           "accuracy": "100"
+                       }
+                   ]
+               },
+               {
+                   "id": "3",
+                   "moveName": "Guillotine",
+                   "details": [
+                       {
+                           "pp": "5",
+                           "power": "max",
+                           "accuracy": "30"
+                       }
+                   ]
+               },
+               {
+                   "id": "4",
+                   "moveName": "Sheer Cold",
+                   "details": [
+                       {
+                           "pp": "5",
+                           "power": "max",
+                           "accuracy": "30"
+                       }
+                   ]
+               }
+           ],
+           "images": [
+               {
+                   "sprite": "powellite.png"
+               }
+           ]
+       },
+       {
+           "name": "Whopper",
+           "stats": [
+               {
+               "health": "60",
+               "attack": "85",
+               "defense": "50",
+               "sp. attack": "95",
+               "sp. defense": "85",
+               "speed": "110"
+               }
+           ],
+           "moves": [
+               {
+                   "id": "1",
+                   "moveName": "Body Slam",
+                   "details": [
+                       {
+                           "pp": "15",
+                           "power": "85",
+                           "accuracy": "100"
+                       }
+                   ]
+               },
+               {
+                   "id": "2",
+                   "moveName": "Consume Burger",
+                   "details": [
+                       {
+                           "pp": "10",
+                           "power": "heal",
+                           "accuracy": "100"
+                       }
+                   ]
+               },
+               {
+                   "id": "3",
+                   "moveName": "Astonish",
+                   "details": [
+                       {
+                           "pp": "15",
+                           "power": "30",
+                           "accuracy": "100"
+                       }
+                   ]
+               },
+               {
+                   "id": "4",
+                   "moveName": "Ominous Wind",
+                   "details": [
+                       {
+                           "pp": "5",
+                           "power": "60",
+                           "accuracy": "100"
+                       }
+                   ]
+               }
+           ],
+           "images": [
+               {
+                   "sprite": "Whopper.png"
+               }
+           ]
+       },
+       {
+           "name": "Jr. Whopper",
+           "stats": [
+               {
+               "health": "30",
+               "attack": "42",
+               "defense": "25",
+               "sp. attack": "47",
+               "sp. defense": "42",
+               "speed": "220"
+               }
+           ],
+           "moves": [
+               {
+                   "id": "1",
+                   "moveName": "extreme speed",
+                   "details": [
+                       {
+                           "pp": "5",
+                           "power": "80",
+                           "accuracy": "100"
+                       }
+                   ]
+               },
+               {
+                   "id": "2",
+                   "moveName": "aerial ace",
+                   "details": [
+                       {
+                           "pp": "20",
+                           "power": "60",
+                           "accuracy": "100"
+                       }
+                   ]
+               },
+               {
+                   "id": "3",
+                   "moveName": "quick attack",
+                   "details": [
+                       {
+                           "pp": "30",
+                           "power": "40",
+                           "accuracy": "100"
+                       }
+                   ]
+               },
+               {
+                   "id": "4",
+                   "moveName": "splash",
+                   "details": [
+                       {
+                           "pp": "40",
+                           "power": "0",
+                           "accuracy": "0"
+                       }
+                   ]
+               }
+           ],
+           "images": [
+               {
+                   "sprite": "jrWhopper.png"
+               }
+           ]
+       }
+       ]
+   }

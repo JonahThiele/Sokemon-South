@@ -59,7 +59,7 @@ class Player(py.sprite.Sprite):
         self.groups = game.all_sprites
         py.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = game.player_images[0]
+        self.image = game.player_images[1]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.hit_rect = PLAYER_HIT_RECT
@@ -100,10 +100,7 @@ class Player(py.sprite.Sprite):
             return "left"
 
     def rotate(self, dir):
-        # mouse = py.mouse.get_pos()
-        # mouse_x, mouse_y = mouse[0] - self.game.camera.x , mouse[1] - self.game.camera.y
-        # rel_x, rel_y = mouse_x - self.rect.x, mouse_y - self.rect.y
-        # self.rot = ((180 / pi) * -atan2(rel_y, rel_x)) % 360
+
         if( dir == "up"):
             self.rot = 90
         elif( dir == "down"):

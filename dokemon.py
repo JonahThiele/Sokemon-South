@@ -14,7 +14,8 @@ class Dokemon(py.sprite.Sprite):
         self.groups = combat.sprites
         py.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = py.image.load(os.path.join(game.img_folder, img_file)).convert_alpha()
+        print(img_file)
+        self.image = py.transform.scale(py.image.load(os.path.join(game.img_folder, img_file)).convert_alpha(), (150, 150))
         self.rect = self.image.get_rect()
         self.name = name
         self.health = health
@@ -25,6 +26,9 @@ class Dokemon(py.sprite.Sprite):
         self.attack = attack
         self.maxHealth = health
         self.moves = attks
+    def draw(self, surface, x, y):
+        surface.blit(self.image, (x, y))
+
 
     
     def moveSet(self):

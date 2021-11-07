@@ -102,7 +102,7 @@ class Game:
         self.map = TiledMap(path.join(self.map_folder, 'Sokemon.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
-        self.combatBackground = py.image.load(path.join(self.img_folder,'background.png'))
+        self.combatBackground = py.image.load(path.join(self.img_folder,'newCombatBackground.png'))
     
         self.player_img = py.image.load(path.join(self.img_folder, PLAYER_IMG)).convert_alpha()
         self.player_images = strip_from_sheet(self.player_img, (0, 0), (16, 16), 3, rows=3)
