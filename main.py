@@ -1,6 +1,6 @@
 import pygame as py
 import sys
-from os import path
+from os import *
 from settings import *
 from sprites import *
 from tilemap import *
@@ -93,20 +93,19 @@ class Game:
         game_folder = path.dirname(__file__)
         snd_folder = path.join(game_folder, 'snd')
         music_folder = path.join(game_folder, 'music')
-        img_folder = path.join(game_folder, 'img')
-        self.map_folder = path.join(game_folder, 'maps')
-        self.title_font = path.join(img_folder, 'POKEMON.TTF')
-        self.hud_font = path.join(img_folder, 'Impacted2.0.TTF')
+        self.img_folder = path.join(game_folder, 'img')
+        self.map_folder = path.join(game_folder, 'maps\\KSUHACKATHON')
+        self.title_font = path.join(self.img_folder, 'POKEMON.TTF')
+        self.hud_font = path.join(self.img_folder, 'Impacted2.0.TTF')
         self.dim_screen = py.Surface(self.screen.get_size()).convert_alpha()
         self.dim_screen.fill((0, 0, 0, 180))
-        self.map = TiledMap(path.join(self.map_folder, 'jungle.tmx'))
+        self.map = TiledMap(path.join(self.map_folder, 'Sokemon.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
-        self.combatBackground = py.image.load(path.join(img_folder,'combatBackground.png'))
+        self.combatBackground = py.image.load(path.join(self.img_folder,'background.png'))
     
-        self.player_img = py.image.load(path.join(img_folder, PLAYER_IMG)).convert_alpha()
-        self.wall_img = py.image.load(path.join(img_folder, WALL_IMG)).convert_alpha()
-        self.wall_img = py.transform.scale(self.wall_img, (TILESIZE, TILESIZE))
+        self.player_img = py.image.load(path.join(self.img_folder, PLAYER_IMG)).convert_alpha()
+        self.player_images = strip_from_sheet(self.player_img, (0, 0), (16, 16), 3, rows=3)
     def new(self):
         # initialize all variables and do all the setup for a new game
         self.all_sprites = py.sprite.LayeredUpdates()
@@ -115,7 +114,7 @@ class Game:
         self.wild_areas = py.sprite.Group()
         self.npcs = py.sprite.Group()
         self.items = py.sprite.Group()
-        self.map = TiledMap(path.join(self.map_folder, 'jungle.tmx'))
+        self.map = TiledMap(path.join(self.map_folder, 'Sokemon.tmx'))
         self.map_img = self.map.make_map()
         self.map_rect = self.map_img.get_rect()
         # for row, tiles in enumerate(self.map.data):
@@ -238,7 +237,7 @@ class Game:
     def show_go_screen(self):
         self.screen.fill(BLACK)
         self.draw_text("GAME OVER", self.title_font, 100, RED, WIDTH / 2, HEIGHT / 2, align='center')
-        self.draw_text("Press a key to start", self.title_font, 75, WHITE, WIDTH / 2, HEIGHT * 3/ 4, align='center')
+        self.draw_text("Press a keya to start", self.title_font, 75, WHITE, WIDTH / 2, HEIGHT * 3/ 4, align='center')
         py.display.flip()
         self.wait_for_key()
 

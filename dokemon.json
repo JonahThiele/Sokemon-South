@@ -29,6 +29,11 @@
                 "id": "4",
                 "moveName": "Air Cutter"
             }
+        ],
+        "images": [
+            {
+                "sprite": "Puckachoo.png"
+            }
         ]
     },
     {
@@ -59,6 +64,11 @@
             {
                 "id": "4",
                 "moveName": "Perish Song"
+            }
+        ],
+        "images": [
+            {
+                "sprite": "powerllite.png"
             }
         ]
     },
@@ -91,6 +101,11 @@
                 "id": "4",
                 "moveName": "Belly Drum"
             }
+        ],
+        "images": [
+            {
+                "sprite": "Whopper.png"
+            }
         ]
     },
     {
@@ -122,45 +137,11 @@
                 "id": "4",
                 "moveName": "splash"
             }
-        ]
-    },
-    {
-        "name": "Glizzy",
-        "stats":[
-            {
-                "health": "255",
-                "attack": "10",
-                "defense": "10",
-                "sp. attack": "75",
-                "sp. defense": "135",
-                "speed": "55"
-            }
         ],
-        "moves": [
+        "images": [
             {
-                "id": "1",
-                "moveName": "Pound", 
-                "details": [
-                    {
-                        "PP": "35",
-                        "Power": "40",
-                        "Accuracy": "100"
-                    }
-                ]
-            },
-            {
-                "id": "2",
-                "moveName": "Growl"
-            },
-            {
-                "id": "3",
-                "moveName": "Tail Whip"
-            },
-            {
-                "id": "4",
-                "moveName": "Refresh"
+                "sprite": ".png"
             }
- 
         ]
     }
     ]
