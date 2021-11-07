@@ -8,14 +8,6 @@ from math import atan2, pi
 import random as rd
 vec = py.math.Vector2
 
-def strip_from_sheet(sheet, start, size, columns, rows=1):
-    frames = []
-    for j in range(rows):
-        for i in range(columns):
-            location = (start[0]+size[0]*i, start[1]+size[1]*j)
-            frames.append(sheet.subsurface(py.Rect(location,size)))
-    return frames
-
 def collide_with_walls(sprite, group, dir):
     if dir == 'x':
         hits = py.sprite.spritecollide(sprite, group, False, collide_hit_rect)
@@ -37,11 +29,13 @@ def collide_with_walls(sprite, group, dir):
             sprite.vel.y = 0
             sprite.hit_rect.centery = sprite.pos.y
 
-def collide_with_dokemon(sprite, group, game):
-    hits = py.sprite.spritecollide(sprite, group, False, collide_hit_rect)
-    if hits:
-        chance = rd.randint(0, 20)
-        if chance == 20:
+def collide_with_dokemon(sprite, group, game, wait="no"): 
+    current_time = py.time.get_ticks()
+    if current_time - sprite.last_collide > sprite.delay:
+        sprite.last_collide = current_time
+        hits = py.sprite.spritecollide(sprite, group, False, collide_hit_rect)
+        if hits:
+            sprite.completed_comp = False
             game.combat = True
             game.playing = False
 
@@ -59,7 +53,7 @@ class Player(py.sprite.Sprite):
         self.groups = game.all_sprites
         py.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = game.player_images[1]
+        self.image = game.player_images[0]
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
         self.hit_rect = PLAYER_HIT_RECT
@@ -71,6 +65,11 @@ class Player(py.sprite.Sprite):
         self.bag = []
         self.walk_state = 0
         self.last_dir = "None"
+        self.last_collide = 0
+        self.delay = 500
+        self.completed_comp = False
+        self.last_frame = 0
+        self.frame_delay = 250
 
 
     def get_keys(self):
@@ -78,45 +77,56 @@ class Player(py.sprite.Sprite):
         self.vel = vec(0, 0)
         keys = py.key.get_pressed()
         mouse_buttons = py.mouse.get_pressed()
+        current_time = py.time.get_ticks()
+        if current_time - self.last_frame > self.frame_delay:
+                self.last_frame = current_time
+                self.walk_state += 1
         if keys[py.K_UP] or keys[py.K_w]:
             if not self.last_dir == "up" or self.walk_state == 3:
                 self.walk_state = 0
             self.vel = vec(0, -PLAYER_SPEED)
+            self.image = py.transform.flip(self.game.player_images[self.walk_state], True, False)
             return "up"
         if keys[py.K_DOWN] or keys[py.K_s]:
             if not self.last_dir == "down" or self.walk_state == 3:
                 self.walk_state = 0
             self.vel = vec(0, PLAYER_SPEED)
+            self.image = self.game.player_images[self.walk_state]
             return "down"
         if keys[py.K_RIGHT] or keys[py.K_d]:
             if not self.last_dir == "right" or self.walk_state == 3:
                 self.walk_state = 0
             self.vel = vec(PLAYER_SPEED, 0)
+            self.image = py.transform.flip(self.game.player_images[self.walk_state], True, False)
             return "right"
         if keys[py.K_LEFT] or keys[py.K_a]:
             if not self.last_dir == "left" or self.walk_state == 3:
                 self.walk_state = 0
             self.vel = vec(-PLAYER_SPEED, 0)
+            self.image = self.game.player_images[self.walk_state]
             return "left"
+        if(self.walk_state > 2):
+            self.walk_state = 0
 
     def rotate(self, dir):
 
         if( dir == "up"):
-            self.rot = 90
+            self.rot = 0
+            self.image = self.game.player_images[self.walk_state]
         elif( dir == "down"):
-            self.rot = 270
+            self.rot = 0
+            self.image = py.transform.flip(self.game.player_images[self.walk_state], True, False)
         elif( dir == "left"):
-            self.rot = 180
+            self.rot = 0
+            self.image = self.game.player_images[self.walk_state]
         elif( dir == "right"):
             self.rot = 0
+            self.image = py.transform.flip(self.game.player_images[self.walk_state], True, False)
         
-        self.image = py.transform.rotate(self.game.player_img, self.rot)
 
     def update(self):
         dir = self.get_keys()
         self.last_dir = dir
-        self.image = self.game.player_images[self.walk_state]
-        self.rotate(dir)
 
         self.rect = self.image.get_rect()
         self.rect.center = self.pos

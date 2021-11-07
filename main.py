@@ -104,8 +104,7 @@ class Game:
         self.map_rect = self.map_img.get_rect()
         self.combatBackground = py.image.load(path.join(self.img_folder,'newCombatBackground.png'))
     
-        self.player_img = py.image.load(path.join(self.img_folder, PLAYER_IMG)).convert_alpha()
-        self.player_images = strip_from_sheet(self.player_img, (0, 0), (16, 16), 3, rows=3)
+        self.player_images = [py.transform.scale(py.image.load(path.join(self.img_folder,'GeraldStill.png')),(64, 64)), py.transform.scale(py.image.load(path.join(self.img_folder,'GeraldWalking1.png')),(64, 64)), py.transform.scale(py.image.load(path.join(self.img_folder,'GeraldWalking2.png')),(64,64))]
     def new(self):
         # initialize all variables and do all the setup for a new game
         self.all_sprites = py.sprite.LayeredUpdates()
