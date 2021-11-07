@@ -25,7 +25,27 @@ class MessagerLogger:
             self.shownMessageList.pop(0)
         else:
             self.shownMessageList.append(message)
-    
+
+class Items:
+    def __init__(self):
+        self.name = 0
+        self.messsage = MessagerLogger()
+    def heal(self, user):
+        user.health += (0.3 * user.maxHealth)
+        self.messsage.logMessage("You abilied a healing kit")
+        self.messsage.logMessage(user.name + " healed to  " + user.health + " hp")
+
+class Dokeball:
+    def __init__(self):
+        self.name = 0
+        self.message = MessagerLogger()
+    def throw(self, user, target):
+        chance = rd.randint(0, 50) - (target.health / target.maxHealth)
+        if (chance < 25):
+            self.message.logMessage(target.name + " has been caught")
+            user.bag.append(target)
+        else:
+            self.message.logMessage(target.name + " escapes the ball")
 
 class Combat:
     def __init__(self, game):
@@ -50,7 +70,10 @@ class Combat:
                 moveName = str(moves['moveName'])
                 number = moves['id']
                 movesList.append((moveName, number))
-            animal = Dokemon(name, health, sp_defense, sp_attack, defense, speed, attack, movesList)
+            for images in dokemon['images']:
+                image = images["sprite"]
+                print("image:" + image)
+            animal = Dokemon(name, health, sp_defense, sp_attack, defense, speed, attack, movesList, self, game, image)
             dokemonList.append(animal)
         self.menu = Menu(dokemonList[1])
         self.paused = False
@@ -103,11 +126,9 @@ class Combat:
                     self.game.quit()
                 if event.type == py.KEYDOWN:
                     if event.key == py. K_DOWN or  event.key == py. K_s:
-                        if self.menu.selected < 7:
-                            self.menu.selected += 1
+                        self.menu.selected += 1
                     if event.key == py. K_UP or  event.key == py. K_w:
-                        if self.menu.selected > -1:
-                            self.menu.selected -= 1
+                        self.menu.selected -= 1
                     if event.key == py. K_LEFT or  event.key == py. K_a:
                         self.menu.selected -= 3
                     if event.key == py. K_RIGHT or  event.key == py. K_d:

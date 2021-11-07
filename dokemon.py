@@ -1,12 +1,21 @@
 import pygame as py
 import json
+import os
+import sys
 import random as rd
+
 
 with open("dokemon.json") as dokemon_file:
     data = json.load(dokemon_file)
 
-class Dokemon:
-    def __init__(self, name, health, sp_defense, sp_attack, defense, speed, attack, attks):
+
+class Dokemon(py.sprite.Sprite):
+    def __init__(self, name, health, sp_defense, sp_attack, defense, speed, attack, attks, combat, game, img_file):
+        self.groups = combat.sprites
+        py.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = py.image.load(os.path.join(game.img_folder, img_file)).convert_alpha()
+        self.rect = self.image.get_rect()
         self.name = name
         self.health = health
         self.sp_defense = sp_defense
@@ -16,8 +25,7 @@ class Dokemon:
         self.attack = attack
         self.maxHealth = health
         self.moves = attks
-
-       
+               
     def decideRandAttack(self, target):
         choice = rd.choice(self.moves)
         target.takeDamage(choice[1])

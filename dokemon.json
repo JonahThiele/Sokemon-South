@@ -57,6 +57,11 @@
                     }
                 ]
             }
+        ],
+        "images": [
+            {
+                "sprite": "Puckachoo.png"
+            }
         ]
     },
     {
@@ -116,6 +121,11 @@
                     }
                 ]
             }
+        ],
+        "images": [
+            {
+                "sprite": "powerllite.png"
+            }
         ]
     },
     {
@@ -174,6 +184,11 @@
                         "accuracy": "100"
                     }
                 ]
+            }
+        ],
+        "images": [
+            {
+                "sprite": "Whopper.png"
             }
         ]
     },
